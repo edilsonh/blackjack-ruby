@@ -37,7 +37,7 @@ while game.user.money > 0
           puts "\nDealer's current hand is:"
           game.current_hand(game.dealer)
           puts "Dealer's hand total is #{game.hand_total}\n\n"
-          if game.hand_total < 16
+          if game.hand_total <= 16
             game.dealer_draw
             puts "Dealer draws a card"
           elsif game.hand_total > 21

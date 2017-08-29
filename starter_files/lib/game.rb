@@ -22,15 +22,15 @@ class Game
   end
 
   def shuffle_deck
-    @deck = @deck.shuffle
+    @deck.shuffle
   end
 
   def user_draw
-    @user.hand<<@deck.shift
+    @deck.draw(@user.hand)
   end
 
   def dealer_draw
-    @dealer.hand<<@deck.shift
+    @deck.draw(@dealer.hand)
   end
 
   def hand_total

@@ -17,11 +17,11 @@ class Deck
     @cards.length
   end
 
-  def draw
-    @cards.shift
+  def draw(player)
+    player<<@cards.shift
   end
 
   def shuffle
-    @cards.shuffle
+    @cards = @cards.shuffle
   end
 end
