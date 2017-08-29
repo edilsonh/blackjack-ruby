@@ -12,43 +12,70 @@ while game.user.money > 0
   2.times{game.user_draw}
   game.user.bet
 
-  while game.user.money > 0
-
-    game.current_hand
-
+  while true
+    puts "Your current hand is:"
+    game.current_hand(game.user)
     puts "Your hand total is #{game.hand_total} \n\n"
     if game.hand_total > 21
-      puts "You went over 21, You lost!"
+      puts "You went over 21. Dealer Wins, You Lose!"
       break
     elsif game.hand_total == 21
       puts "BLACKJACK! YOU WIN!!!"
       game.user.win
       break
+    elsif game.hand_total < 21
+      puts "Would you like to hit or stand?"
+      puts "Type h for hit. Type s for stand."
+      response = gets.chomp.downcase
+      if response == "h"
+        puts "\nOk, now drawing card..."
+        game.user_draw
+      elsif response == "s"
+        puts "\nPlaying it safe!\n\n"
+        puts "Dealer's current hand is:"
+        game.current_hand(game.dealer)
+        puts "Dealer's hand total is #{game.hand_total}\n\n"
+        while true
+          game.dealer_draw
+          puts "Dealer draws"
+          puts "\nDealer's current hand is:"
+          game.current_hand(game.dealer)
+          puts "Dealer's hand total is #{game.hand_total}\n\n"
+          if game.hand_total > 21
+            puts "Dealer broke, You Win!"
+            game.user.win
+            break
+          elsif game.hand_total <21 && game.hand_total >= 17
+            puts "Dealer Stands"
+            break
+          end
+        end
+        break
+      else
+        puts "\nInvalid Response, Try Again...\n\n"
+      end
     end
-    puts "Would you like to hit or stand?"
-    puts "Type h for hit. Type s for stand."
-    response = gets.chomp.downcase
-    if response == "h"
-      puts "Ok, now drawing card..."
-      game.user_draw
-    elsif response == "s"
-      puts "playing it safe"
+  end
+
+
+  while true
+    if game.user.money < 10
+      puts "\nLooks like you don't have enough money, come back when you do...\n\n"
+      exit
+    end
+    puts "\nWould you like to play again?"
+    puts "Type y for yes. Type n for no"
+    play_again = gets.chomp.downcase
+    if play_again == "n"
+      puts "\nThanks for Playing!\n"
+      exit
+    elsif play_again == "y"
+      puts "\n\nWelcome Back!\n"
+      game.user.hand.clear
+      game.dealer.hand.clear
       break
     else
-      puts "Invalid Response, Try Again"
+      puts "\nInvalid Response, Try Again..."
     end
-
   end
-
-  puts "\nWould you like to play again?"
-  puts "Type y for yes. Type n for no"
-  play_again = gets.chomp.downcase
-  if play_again == "n"
-    puts "\nThanks for Playing!\n"
-    break
-  elsif play_again == "y"
-    puts "\n\nWelcome Back!\n"
-    game.user.hand.clear
-  end
-
 end

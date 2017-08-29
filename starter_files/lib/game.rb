@@ -37,19 +37,17 @@ class Game
     @hand_total
   end
 
-  def current_hand
+  def current_hand(player)
     @hand_total = 0
-    hand_iteration = @user.hand.length - 1
-
-    puts "Your current hand is: "
+    hand_iteration = player.hand.length - 1
 
     for i in 0..hand_iteration
-      if (@user.hand[i].rank == :K) || (@user.hand[i].rank == :Q) || (@user.hand[i].rank == :J) || (@user.hand[i].rank == :A)
+      if (player.hand[i].rank == :K) || (player.hand[i].rank == :Q) || (player.hand[i].rank == :J) || (player.hand[i].rank == :A)
         @hand_total += 10
       else
-        @hand_total += @user.hand[i].rank
+        @hand_total += player.hand[i].rank
       end
-      puts "#{@user.hand[i].rank} #{@user.hand[i].suit.upcase}"
+      puts "#{player.hand[i].rank} #{player.hand[i].suit.upcase}"
     end
   end
 end
