@@ -16,6 +16,7 @@ while game.user.money > 0
     puts "Your current hand is:"
     game.current_hand(game.user)
     puts "Your hand total is #{game.hand_total} \n\n"
+    user_total = game.hand_total
     if game.hand_total > 21
       puts "You went over 21. Dealer Wins, You Lose!"
       break
@@ -31,22 +32,35 @@ while game.user.money > 0
         puts "\nOk, now drawing card..."
         game.user_draw
       elsif response == "s"
-        puts "\nPlaying it safe!\n\n"
-        puts "Dealer's current hand is:"
-        game.current_hand(game.dealer)
-        puts "Dealer's hand total is #{game.hand_total}\n\n"
+        puts "\nPlaying it safe!\n"
         while true
-          game.dealer_draw
-          puts "Dealer draws"
           puts "\nDealer's current hand is:"
           game.current_hand(game.dealer)
           puts "Dealer's hand total is #{game.hand_total}\n\n"
-          if game.hand_total > 21
+          if game.hand_total < 16
+            game.dealer_draw
+            puts "Dealer draws a card"
+          elsif game.hand_total > 21
             puts "Dealer broke, You Win!"
             game.user.win
             break
-          elsif game.hand_total <21 && game.hand_total >= 17
-            puts "Dealer Stands"
+          elsif game.hand_total == 21
+            puts "Dealer Wins!"
+            break
+          elsif game.hand_total > 16 && game.hand_total < 21
+            puts "Dealer Stands..."
+            if user_total > game.hand_total
+              game.user.win
+              puts "You're closer to 21, you win!"
+              break
+            elsif user_total < game.hand_total
+              puts "Dealer is closer to 21, you lose!"
+              break
+            else
+              puts "Tied, here's your money back."
+              game.user.tie
+              break
+            end
             break
           end
         end

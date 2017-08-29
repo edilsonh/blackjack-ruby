@@ -21,4 +21,7 @@ class User
     @money += (10 * 3/2)
   end
 
+  def tie
+    @money += 10
+  end
 end

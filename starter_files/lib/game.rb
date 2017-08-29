@@ -42,8 +42,14 @@ class Game
     hand_iteration = player.hand.length - 1
 
     for i in 0..hand_iteration
-      if (player.hand[i].rank == :K) || (player.hand[i].rank == :Q) || (player.hand[i].rank == :J) || (player.hand[i].rank == :A)
+      if (player.hand[i].rank == :K) || (player.hand[i].rank == :Q) || (player.hand[i].rank == :J)
         @hand_total += 10
+      elsif player.hand[i].rank == :A
+        if @hand_total > 10
+          @hand_total += 1
+        else
+          @hand_total += 11
+        end
       else
         @hand_total += player.hand[i].rank
       end
